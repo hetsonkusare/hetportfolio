@@ -95,6 +95,24 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 /* GALLERY GRID */
 .gallery-grid{padding:24px 44px 80px;columns:3;column-gap:6px;position:relative;z-index:1}
 .gallery-item{break-inside:avoid;margin-bottom:6px;position:relative;overflow:hidden;background:var(--panel-s);cursor:none;animation:fadeUp 0.45s ease both;border:1px solid var(--border);transition:border-color 0.3s;border-radius:2px}
+
+/* Mobile Pinterest Grid */
+@media(max-width:768px){
+  .gallery-grid{
+    padding:12px 8px 80px;
+    columns:2;
+    column-gap:6px;
+  }
+  .gallery-item{
+    margin-bottom:6px;
+    border-radius:8px;
+  }
+  .page-header{padding:80px 18px 24px}
+  .filter-bar{padding:10px 8px}
+  .filter-btn{padding:8px 14px;font-size:0.65rem}
+  .overlay-title{font-size:0.85rem}
+  .overlay-type{font-size:0.5rem}
+}
 .gallery-item:hover{border-color:var(--luffy)}
 .gallery-item img,.gallery-item video{width:100%;display:block;transition:transform 0.5s ease}
 .gallery-item:hover img,.gallery-item:hover video{transform:scale(1.04)}
