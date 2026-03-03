@@ -96,7 +96,15 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 .gallery-grid{padding:24px 44px 80px;columns:3;column-gap:6px;position:relative;z-index:1}
 .gallery-item{break-inside:avoid;margin-bottom:6px;position:relative;overflow:hidden;background:var(--panel-s);cursor:none;animation:fadeUp 0.45s ease both;border:1px solid var(--border);transition:border-color 0.3s;border-radius:2px}
 .gallery-item:hover{border-color:var(--luffy)}
-.gallery-item img,.gallery-item video{width:100%;display:block;transition:transform 0.5s ease}
+.gallery-item img,
+.gallery-item video{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain; /* NEVER CROP */
+  background:#000; /* black bars instead of crop */
+  transition:transform 0.5s ease;
+}
 .gallery-item:hover img,.gallery-item:hover video{transform:scale(1.04)}
 .gallery-item::after{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 16px 16px 0;border-color:transparent var(--border) transparent transparent;z-index:2;transition:border-color 0.3s}
 .gallery-item:hover::after{border-color:transparent var(--luffy) transparent transparent}
@@ -286,112 +294,32 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
 }
 
 /* ── INSTAGRAM GRID — 375px phone ── */
-@media(max-width:640px){
+@media(max-width:900px){
 
-  /* NAV */
-  nav{padding:0 12px;height:48px}
-  .nav-logo{font-size:1.1rem;gap:7px}
-  .nav-logo svg{width:22px;height:19px}
-  .nav-back{font-size:0.52rem;letter-spacing:0.1em}
+  body{cursor:auto}
+  .cursor,.cursor-ring{display:none}
 
-  /* HEADER — compact profile-style */
-  .page-header{
-    padding:58px 14px 14px;
-    margin-top:48px;
-  }
-  .page-tag{font-size:0.55rem;margin-bottom:6px}
-  .page-title{font-size:clamp(26px,9vw,40px);line-height:1}
-  .page-count{font-size:0.55rem;margin-top:8px}
-
-  /* FILTER BAR — Instagram tab style */
-  .filter-bar{
-    padding:0;
-    gap:0;
-    display:flex;
-    background:var(--bg);
-    border-bottom:1px solid var(--border);
-  }
-  .filter-btn{
-    flex:1;
-    border:none;
-    border-radius:0;
-    border-bottom:2px solid transparent;
-    padding:10px 4px;
-    font-size:0.6rem;
-    letter-spacing:0.12em;
-    background:transparent;
-    color:var(--dim);
-    transition:all 0.2s;
-  }
-  .filter-btn.active{
-    border-bottom:2px solid var(--luffy);
-    color:var(--white);
-    background:transparent;
-  }
-
-  /* ── INSTAGRAM 3-COLUMN GRID ── */
   .gallery-grid{
-    display:grid!important;
-    grid-template-columns:repeat(3,1fr);
-    gap:2px;
-    padding:2px 0 80px;
-    columns:unset;
-    column-gap:unset;
+    columns:3; /* SAME as desktop */
+    column-gap:6px;
+    padding:24px 16px 80px;
   }
+
   .gallery-item{
-    break-inside:unset;
-    margin-bottom:0;
-    border-radius:0;
-    border:none;
-    aspect-ratio:1/1;   /* perfect squares like Instagram */
-    overflow:hidden;
+    break-inside:avoid;
+    margin-bottom:6px;
+    border-radius:2px;
   }
+
   .gallery-item img,
   .gallery-item video{
     width:100%;
-    height:100%;
-    object-fit:cover;   /* fills the square, crops like Instagram */
-    display:block;
-    transition:none;
-  }
-  .gallery-item:hover img,
-  .gallery-item:hover video{transform:none}
-  .gallery-item::after{display:none}
-  .gallery-item:hover{border-color:transparent}
-
-  /* Video badge — small corner dot like Instagram */
-  .video-badge{
-    top:5px;left:auto;right:5px;
-    padding:2px 5px;
-    font-size:0.42rem;
-    gap:3px;
-    border-radius:3px;
+    height:auto;
+    object-fit:contain; /* NO CROP EVER */
   }
 
-  /* Overlay only on tap — keep it simple */
-  .gallery-overlay{padding:8px}
-  .overlay-title{font-size:0.7rem;letter-spacing:0.02em}
-  .overlay-type{font-size:0.44rem;margin-top:2px}
-
-  /* PLAYER */
-  .player-sidebar{display:none}
-  footer{flex-direction:column;gap:8px;padding:14px 16px;text-align:center}
-  .icon-btn{padding:10px}
-  .player-body{flex-direction:column}
-  .player-stage{width:100%;flex:1;min-height:0}
-  #mediaWrap video.vid-horizontal,
-  #mediaWrap video.vid-vertical{
-    width:100%;height:100%;max-width:100%;max-height:100%;
-    object-fit:contain;border-radius:0;box-shadow:none;
-  }
-  .seekbar-wrap{height:36px}
-  .seekbar-track{height:5px}
-  .seekbar-wrap:hover .seekbar-track{height:7px}
-  .seekbar-thumb{transform:translateY(-50%) scale(1)!important;width:16px;height:16px}
-  .vol-slider-wrap{width:60px!important}
-  .time-display{font-size:0.62rem;padding:4px 7px}
-  .kb-hint{display:none}
-  .player-stage::before,.player-stage::after{width:16px;height:16px}
+  nav{padding:0 14px}
+  .page-header{padding-left:16px;padding-right:16px}
 }
 </style>
 </head>
@@ -574,7 +502,7 @@ function buildGrid(filter='all'){
   empty.style.display='none';setup.style.display='none';
   document.getElementById('pageCount').textContent=`— ${filteredItems.length} file${filteredItems.length!==1?'s':''}`;
   filteredItems.forEach((item,i)=>{
-    const div=document.createElement('div');div.className='gallery-item';div.style.animationDelay=(i%9)*0.05+'s';div.onclick=()=>openPlayer(i);
+    const div=document.createElement('div');div.className='gallery-item type-'+item.type;div.style.animationDelay=(i%9)*0.05+'s';div.onclick=()=>openPlayer(i);
     if(item.type==='video'){
       const vid=document.createElement('video');vid.src=item.src;vid.muted=true;vid.loop=true;vid.playsInline=true;vid.preload='metadata';
       div.addEventListener('mouseenter',()=>vid.play().catch(()=>{}));
