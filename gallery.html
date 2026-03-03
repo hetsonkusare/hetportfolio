@@ -96,22 +96,27 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 .gallery-grid{padding:24px 44px 80px;columns:3;column-gap:6px;position:relative;z-index:1}
 .gallery-item{break-inside:avoid;margin-bottom:6px;position:relative;overflow:hidden;background:var(--panel-s);cursor:none;animation:fadeUp 0.45s ease both;border:1px solid var(--border);transition:border-color 0.3s;border-radius:2px}
 
-/* Mobile Pinterest Grid */
-@media(max-width:768px){
+/* Mobile Pinterest Grid — tuned for 375×667 */
+@media(max-width:480px){
   .gallery-grid{
-    padding:12px 8px 80px;
+    padding:8px 6px 80px;
     columns:2;
-    column-gap:6px;
+    column-gap:5px;
   }
   .gallery-item{
-    margin-bottom:6px;
-    border-radius:8px;
+    margin-bottom:5px;
+    border-radius:6px;
   }
-  .page-header{padding:80px 18px 24px}
-  .filter-bar{padding:10px 8px}
-  .filter-btn{padding:8px 14px;font-size:0.65rem}
-  .overlay-title{font-size:0.85rem}
-  .overlay-type{font-size:0.5rem}
+  .page-header{padding:70px 14px 20px}
+  .page-title{font-size:clamp(28px,10vw,44px)}
+  .filter-bar{padding:8px 6px;gap:5px}
+  .filter-btn{padding:7px 12px;font-size:0.6rem;letter-spacing:0.1em}
+  .overlay-title{font-size:0.78rem;letter-spacing:0.04em}
+  .overlay-type{font-size:0.48rem}
+  .gallery-overlay{padding:10px}
+  nav{padding:0 14px}
+  .nav-logo{font-size:1.2rem}
+  .nav-back{font-size:0.55rem}
 }
 .gallery-item:hover{border-color:var(--luffy)}
 .gallery-item img,.gallery-item video{width:100%;display:block;transition:transform 0.5s ease}
