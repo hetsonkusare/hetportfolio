@@ -308,11 +308,11 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
   .filter-btn{font-size:0.7rem;font-weight:600;padding:8px 18px;letter-spacing:0.1em;color:#c8cfe8;border-color:rgba(200,207,232,0.3)}
   .filter-btn.active{background:var(--luffy);border-color:var(--luffy);color:#0a0a0c;font-weight:700}
 
-  /* ── GALLERY GRID ── */
+  /* ── GALLERY GRID — keep original 3-col on mobile ── */
   .gallery-grid{
-    columns:2;
+    columns:3;
     column-gap:6px;
-    padding:16px 16px 60px;
+    padding:24px 16px 80px;
   }
   .gallery-item{break-inside:avoid;margin-bottom:6px;border-radius:2px}
   .gallery-item img,.gallery-item video{width:100%;height:auto;object-fit:contain}
@@ -348,8 +348,6 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
 }
 
 @media(max-width:480px){
-  /* Single column grid on very small phones */
-  .gallery-grid{columns:1;padding:12px 12px 48px}
   .page-title{font-size:clamp(32px,11vw,56px)}
   .page-header{padding:52px 12px 24px}
   .filter-bar{padding:8px 12px}
@@ -395,7 +393,7 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
-   <img src="media/goku.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;">
+    <img src="media/goku.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;">
     <span style="font-weight:800;letter-spacing:0.06em;">Het</span>
   </a>
   <a href="index.html" class="nav-back">
@@ -404,7 +402,7 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
   </a>
 </nav>
 
-<!-- HEADER -->        
+<!-- HEADER -->
 <div class="page-header">
   <div class="page-tag"><div class="page-tag-line"></div>Selected Work</div>
   <h1 class="page-title">My <em>WORK</em></h1>
