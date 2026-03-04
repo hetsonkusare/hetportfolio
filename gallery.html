@@ -3,82 +3,84 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Work — Het Sonkusare</title>
+<title>Work — Het Sonkusare ⚡</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<!-- SWITZER FONT -->
-<link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+
 
 <style>
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:#0d0a08;
-  --bg2:#110e0b;
-  --panel:#1a1510;
-  --panel-s:#1e1a12;
+  --bg:#0a0a0c;
+  --bg2:#0d0d10;
+  --panel:#131318;
+  --panel-s:#18181f;
 
-  --border:#2e2518;
-  --border2:#4a3c22;
+  --border:#2a2a35;
+  --border2:#44445a;
 
-  --luffy:#e8231a;
-  --luffy2:#ff4a3a;
+  --luffy:#c8cfe8;
+  --luffy2:#e8ecff;
 
-  --straw:#f5c542;
-  --straw2:#ffd966;
+  --straw:#5b8aff;
+  --straw2:#7ba3ff;
 
-  --ocean:#1565a8;
-  --ocean2:#1e88e5;
-  --ocean3:#42a5f5;
+  --ocean:#1a1a2e;
+  --ocean2:#22223a;
+  --ocean3:#2e2e4e;
 
-  --white:#fff8ec;
-  --dim:#9a8870;
-  --dim2:#3d3020;
+  --white:#f0f2ff;
+  --dim:#b8bccc;
+  --dim2:#8890aa;
 
   /* UPDATED FONTS */
-  --mono:'Switzer', monospace;
-  --display:'Switzer', sans-serif;
-  --body:'Switzer', sans-serif;
+  --mono:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  --display:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  --body:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
 }
 
 html{scroll-behavior:smooth}
 
 body{
   background:var(--bg);
+  background-image: radial-gradient(rgba(200,207,232,0.07) 1px, transparent 1px), radial-gradient(rgba(91,138,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px, 30px 30px;
   color:var(--white);
-  font-family:'Switzer',sans-serif;
-  font-weight:700;
+  font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  font-weight:400;
   overflow-x:hidden;
   cursor:none
 }
 
 
 .orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(100px);z-index:0}
-.orb-1{width:600px;height:600px;background:var(--luffy);top:-200px;right:-200px;opacity:0.07}
-.orb-2{width:500px;height:500px;background:var(--ocean);bottom:-200px;left:-200px;opacity:0.10}
+.orb-1{width:600px;height:600px;background:rgba(200,207,232,0.7);top:-200px;right:-200px;opacity:0.06}
+.orb-2{width:500px;height:500px;background:rgba(91,138,255,0.8);bottom:-200px;left:-200px;opacity:0.08}
 
 /* Cursor */
-.cursor{position:fixed;width:14px;height:14px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-.cursor::before,.cursor::after{content:'';position:absolute;background:var(--luffy)}
+.cursor{position:fixed;width:14px;height:14px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);filter:drop-shadow(0 0 6px rgba(200,207,232,0.8))}
+.cursor::before,.cursor::after{content:'';position:absolute;background:#ffffff}
 .cursor::before{width:2px;height:14px;left:6px;top:0;border-radius:1px}
 .cursor::after{width:14px;height:2px;top:6px;left:0;border-radius:1px}
-.cursor-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(232,35,26,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.12s ease}
-body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{transform:translate(-50%,-50%) scale(1.8);border-color:var(--straw);background:rgba(245,197,66,0.06)}
+.cursor-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(200,207,232,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.12s ease}
+body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{transform:translate(-50%,-50%) scale(1.8);border-color:#ffffff;background:rgba(200,207,232,0.06)}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(13,10,8,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(18px)}
-nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--luffy),var(--straw),var(--luffy),transparent);opacity:0.7}
-.nav-logo{font-family:var(--display);font-size:1.5rem;letter-spacing:0.08em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px;line-height:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(5,8,15,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(18px)}
+nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(200,207,232,0.5),#ffffff,rgba(91,138,255,0.8),#ffffff,rgba(200,207,232,0.5),transparent);opacity:1}
+.nav-logo{font-family:var(--display);font-size:1.5rem;letter-spacing:0.08em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px;line-height:1;font-weight:800}
 .nav-logo svg{width:28px;height:24px;flex-shrink:0}
 .nav-back{display:flex;align-items:center;gap:8px;color:var(--dim);text-decoration:none;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
 .nav-back svg{width:14px;height:14px;flex-shrink:0}
 .nav-back:hover{color:var(--luffy)}
 
 /* PAGE HEADER */
-.page-header{padding:80px 44px 36px;margin-top:54px;border-bottom:1px solid var(--border);background:linear-gradient(to bottom,#0f0c0a,var(--bg));position:relative;overflow:hidden;z-index:1}
-.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(232,35,26,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(232,35,26,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.page-header{padding:80px 44px 36px;margin-top:54px;border-bottom:1px solid var(--border);background:linear-gradient(to bottom,#08080c,var(--bg));position:relative;overflow:hidden;z-index:1}
+.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(200,207,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,207,232,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
 .page-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--luffy),var(--straw),transparent);opacity:0.5}
 .page-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--luffy);margin-bottom:12px;position:relative;display:flex;align-items:center;gap:10px}
 .page-tag-line{width:28px;height:2px;background:var(--luffy);border-radius:1px;flex-shrink:0}
@@ -88,7 +90,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 
 /* FILTER BAR */
 .filter-bar{padding:12px 44px;display:flex;gap:6px;flex-wrap:wrap;background:rgba(13,10,8,0.92);border-bottom:1px solid var(--border);position:relative;z-index:1}
-.filter-btn{background:transparent;border:1px solid var(--border);color:var(--dim2);font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;padding:7px 18px;cursor:none;transition:all 0.2s;border-radius:3px;font-weight:700}
+.filter-btn{background:transparent;border:1px solid var(--border);color:var(--dim2);font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;padding:7px 18px;cursor:none;transition:all 0.2s;border-radius:3px;font-weight:400}
 .filter-btn:hover{border-color:var(--border2);color:var(--white);background:rgba(255,255,255,0.04)}
 .filter-btn.active{background:var(--luffy);border-color:var(--luffy);color:#fff}
 
@@ -143,7 +145,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 
 .player-overlay{position:fixed;inset:0;z-index:1000;background:rgba(8,6,4,0.97);display:none;flex-direction:column;overflow:hidden}
 .player-overlay.open{display:flex}
-.player-topbar{display:flex;align-items:center;gap:12px;padding:0 16px;height:50px;flex-shrink:0;background:#0a0703;border-bottom:1px solid var(--border);position:relative}
+.player-topbar{display:flex;align-items:center;gap:12px;padding:0 16px;height:50px;flex-shrink:0;background:#080810;border-bottom:1px solid var(--border);position:relative}
 .player-topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--luffy),transparent);opacity:0.4;z-index:10}
 .player-top-title{font-family:var(--display);font-size:1rem;letter-spacing:0.08em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .player-top-count{font-family:var(--mono);font-size:0.6rem;color:var(--dim);letter-spacing:0.1em;white-space:nowrap}
@@ -164,7 +166,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  background:#060402;
+  background:#05050a;
   min-width:0;
   min-height:0;
 }
@@ -216,7 +218,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 .kb-hint.show{opacity:1}
 
 /* ── CONTROLS BAR ── */
-.player-controls{flex-shrink:0;background:#0a0703;border-top:1px solid var(--border);padding:4px 18px 12px;display:none}
+.player-controls{flex-shrink:0;background:#080810;border-top:1px solid var(--border);padding:4px 18px 12px;display:none}
 .player-controls.visible{display:block}
 
 .seekbar-wrap{height:28px;display:flex;align-items:center;cursor:pointer;position:relative;touch-action:none}
@@ -262,7 +264,7 @@ nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;backg
 .pi-play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5)}
 .pi-play-icon svg{width:10px;height:10px}
 .pi-info{flex:1;min-width:0}
-.pi-title{font-size:0.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.pi-title{font-size:0.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400}
 .pi-meta{font-family:var(--mono);font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim2);margin-top:2px}
 .pi-num{font-family:var(--mono);font-size:0.68rem;color:var(--dim2);flex-shrink:0;min-width:18px;text-align:right}
 .pi-bars{display:none;align-items:flex-end;gap:2px;height:12px;margin-left:4px}
@@ -357,12 +359,8 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
-    <svg viewBox="0 0 36 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="18" cy="26" rx="16" ry="5" fill="#f5c542"/>
-      <ellipse cx="18" cy="18" rx="10" ry="10" fill="#f5c542"/>
-      <path d="M8 22 Q18 27 28 22" stroke="#e8231a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-    </svg>
-    Het
+    <img src="media/goku.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;">
+    <span style="font-weight:800;letter-spacing:0.06em;">Het</span>
   </a>
   <a href="index.html" class="nav-back">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/></svg>
@@ -451,10 +449,10 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
   </div>
 </div>
 
-<footer style="color:var(--straw);">
-  <span class="footer-copy">© 2024 Het Sonkusare — Video Editor &amp; Motion Designer</span>
+<footer style="color:#c8cfe8;">
+  <span class="footer-copy" style="color:#8890aa;">© 2024 Het Sonkusare — Video Editor &amp; Motion Designer</span>
   
-  <a href="index.html" class="footer-back" style="color:var(--straw);">
+  <a href="index.html" class="footer-back" style="color:#c8cfe8;">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"/>
       <polyline points="12,19 5,12 12,5"/>
