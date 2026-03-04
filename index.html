@@ -290,39 +290,109 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
   .hero-panel-deco{display:none}
   #hero{grid-template-columns:1fr 320px;gap:0 32px}
 }
+
 @media(max-width:900px){
-  body{cursor:auto}.cursor,.cursor-ring{display:none}
+  body{cursor:auto;font-size:16px}
+  .cursor,.cursor-ring{display:none}
   .btn-primary,.btn-ghost,.form-submit,.nav-hamburger{cursor:pointer}
-  nav{padding:0 16px}
+
+  /* ── NAV ── */
+  nav{padding:0 16px;height:54px}
   .nav-links,.nav-bounty{display:none}
-  .nav-hamburger{display:flex}.mobile-nav{display:flex}
-  /* Hero stacks: photo on top, text below */
+  .nav-hamburger{display:flex}
+  .mobile-nav{display:flex}
+  .nav-logo{font-size:1.5rem;font-weight:800}
+
+  /* Mobile nav links bigger & bolder */
+  .mobile-nav a{font-size:2.8rem;font-weight:800;letter-spacing:0.08em;color:var(--white)}
+  .mobile-nav a:hover{color:var(--luffy)}
+
+  /* ── HERO ── */
   #hero{grid-template-columns:1fr;grid-template-rows:auto auto;align-items:start;padding:20px 20px 52px;gap:32px 0}
   .hero-photo-col{order:-1;height:55vw;min-height:240px;max-height:380px;padding-top:0}
   .hero-photo-frame{height:100%;max-height:none;min-height:unset}
   .hero-photo-tag{display:none}
+
+  /* Hero text — bigger, bolder on mobile */
+  .hero-eyebrow{font-size:0.75rem;font-weight:700;letter-spacing:0.2em}
+  .hero-slogan{font-size:1.05rem;font-weight:600;line-height:1.5}
+  .name-het,.name-son,.name-kusare{font-size:clamp(52px,13vw,88px)}
+  .name-edits{font-size:0.72rem;font-weight:700;letter-spacing:0.2em;margin-top:8px}
+  .hero-sub{font-size:1rem;font-weight:400;line-height:1.85;color:#c8cfe8}
+
+  /* Buttons bigger on mobile */
+  .btn-primary{font-size:1rem;font-weight:700;padding:13px 26px}
+  .btn-ghost{font-size:1rem;font-weight:600;padding:12px 22px}
+
+  /* Social links */
+  .hero-socials a{font-size:0.75rem;font-weight:600;letter-spacing:0.1em}
+
+  /* ── SECTIONS ── */
+  .section-label{font-size:0.72rem;font-weight:700;letter-spacing:0.2em}
+  .section-title{font-size:clamp(36px,9vw,64px);line-height:0.95}
+
+  /* ── ABOUT ── */
   #about{grid-template-columns:1fr;gap:48px;padding:80px 20px}
   .about-photo-col{flex-direction:row;align-items:flex-start;gap:20px}
   .about-photo-wrap{max-width:160px;flex-shrink:0}
   .about-avail-badge{width:auto}
-  #contact{grid-template-columns:1fr;gap:48px;padding:80px 20px}
-  #services,#skills{padding:80px 20px}
+  .num-val{font-size:2.4rem;font-weight:800}
+  .num-label{font-size:0.62rem;font-weight:600;color:#b8bccc}
+  .about-text{font-size:1rem;font-weight:400;line-height:1.9;color:#c8cfe8}
+  .tool-badge{font-size:0.65rem;font-weight:600;padding:6px 13px}
+  .about-hire{font-size:1rem;font-weight:700;padding:12px 24px}
+
+  /* ── SERVICES ── */
+  #services{padding:80px 20px}
   .services-grid{grid-template-columns:1fr}
+  .svc-name{font-size:1.3rem;font-weight:700}
+  .svc-desc{font-size:0.95rem;font-weight:400;line-height:1.8;color:#c8cfe8}
+  .svc-tag-label{font-size:0.65rem;font-weight:600}
+
+  /* ── SKILLS ── */
+  #skills{padding:80px 20px}
   .skills-inner{grid-template-columns:1fr;gap:40px}
+  .skills-group-label{font-size:0.7rem;font-weight:700;color:#b8bccc}
+  .skill-meta{font-size:0.95rem;font-weight:600}
+  .skill-pct{font-size:0.82rem;font-weight:700}
+
+  /* ── CONTACT ── */
+  #contact{grid-template-columns:1fr;gap:48px;padding:80px 20px}
+  .contact-title{font-size:clamp(32px,8vw,56px)}
+  .contact-sub{font-size:1rem;font-weight:400;color:#c8cfe8}
+  .contact-link{font-size:0.95rem;font-weight:600;color:#e8ecff}
+  .form-row input,.form-row textarea{font-size:1rem;font-weight:400}
+  .form-row label{font-size:0.65rem;font-weight:600}
+  .form-submit{font-size:1rem;font-weight:700;padding:14px 32px;width:100%;text-align:center;align-self:stretch}
+
+  /* ── FOOTER ── */
   footer{padding:18px 16px}
+  .footer-copy{font-size:0.65rem;font-weight:500;color:#b8bccc}
+  .footer-slogan{font-size:0.95rem;font-weight:600}
+
   .hero-scroll{display:none}
 }
+
 @media(max-width:640px){
   #hero{padding:16px 16px 48px}
   .hero-photo-col{height:60vw;max-height:300px}
   .hero-actions{flex-direction:column;align-items:flex-start;gap:10px}
-  .btn-primary,.btn-ghost{width:100%;justify-content:center}
+  .btn-primary,.btn-ghost{width:100%;justify-content:center;font-size:1rem;font-weight:700}
   footer{flex-direction:column;text-align:center;gap:10px}
   .about-photo-col{flex-direction:column;align-items:flex-start}
   .about-photo-wrap{max-width:100%}
+
+  /* Extra small screen — keep text big & readable */
+  .name-het,.name-son,.name-kusare{font-size:clamp(44px,14vw,72px)}
+  .hero-slogan{font-size:0.98rem}
+  .hero-sub{font-size:0.95rem}
+  .section-title{font-size:clamp(32px,10vw,56px)}
+  .svc-name{font-size:1.2rem}
+  .num-val{font-size:2.2rem}
 }
+
 @media(max-width:700px){
-  .nav-logo{font-size:1.3rem}
+  .nav-logo{font-size:1.4rem;font-weight:800}
   .about-num-row{grid-template-columns:1fr 1fr}
 }
 </style>
@@ -392,8 +462,7 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">
-     <img src="media/goku.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;">
+<img src="media/goku.png" alt="Logo" style="width:36px;height:36px;object-fit:contain;">
     <span style="font-weight:800;letter-spacing:0.06em;">Het</span>
   </a>
   <ul class="nav-links">
