@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 
 
@@ -45,9 +45,9 @@
   --dim2:#8890aa;
 
   /* UPDATED FONTS */
-  --mono:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  --display:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  --body:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --mono:'Space Mono', sans-serif;
+  --display:'Syne', sans-serif;
+  --body:'Syne', sans-serif;
 }
 
 html{scroll-behavior:smooth}
@@ -57,7 +57,7 @@ body{
   background-image: radial-gradient(rgba(200,207,232,0.07) 1px, transparent 1px), radial-gradient(rgba(91,138,255,0.04) 1px, transparent 1px);
   background-size: 60px 60px, 30px 30px;
   color:var(--white);
-  font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  font-family:'Syne', sans-serif;
   font-weight:500;
   overflow-x:hidden;
   cursor:none
@@ -65,7 +65,7 @@ body{
 
 /* Example heading using ExtraBold */
 .hero-title{
-  font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  font-family:'Syne', sans-serif;
   font-weight:800;
 }
 
@@ -396,6 +396,194 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
   .nav-logo{font-size:1.4rem;font-weight:800}
   .about-num-row{grid-template-columns:1fr 1fr}
 }
+
+/* ─── INJECTED ANIMATIONS ─── */
+/* ============================================================
+   ANIMATION INJECTION — All 5 features
+   ============================================================ */
+
+/* 1. FLOATING / BOUNCE KEYFRAMES */
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes floatY-slow{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes bouncePop{0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-14px) scale(1.04)}60%{transform:translateY(-6px) scale(0.98)}}
+@keyframes floatRotate{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes levitate{0%,100%{transform:translateY(0) scale(1);box-shadow:0 10px 40px rgba(200,207,232,0.2)}50%{transform:translateY(-8px) scale(1.01);box-shadow:0 28px 60px rgba(200,207,232,0.35),0 0 60px rgba(91,138,255,0.2)}}
+
+/* 2. FADE-UP ON SCROLL — enhanced */
+@keyframes fadeUpIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUpScale{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeUpRotate{from{opacity:0;transform:translateY(24px) rotateX(8deg)}to{opacity:1;transform:translateY(0) rotateX(0)}}
+
+/* 3. PARALLAX (JS-driven, class toggled) */
+.parallax-bg{transform:translateY(var(--parallax-y,0px));will-change:transform;transition:transform 0.05s linear}
+
+/* 4. HOVER EFFECTS — glow, scale, rotate buttons */
+/* Glow pulse */
+@keyframes glowPulse{0%,100%{box-shadow:0 0 10px rgba(200,207,232,0.3),0 0 30px rgba(91,138,255,0.15)}50%{box-shadow:0 0 24px rgba(200,207,232,0.7),0 0 60px rgba(91,138,255,0.35),0 0 100px rgba(200,207,232,0.15)}}
+/* Button shimmer */
+@keyframes shimmer{from{background-position:-200% center}to{background-position:200% center}}
+
+/* Enhanced btn-primary */
+.btn-primary{
+  background:linear-gradient(135deg,rgba(200,207,232,0.95) 0%,#e8ecff 50%,rgba(200,207,232,0.95) 100%);
+  background-size:200% auto;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s ease,background-position 0.5s ease;
+}
+.btn-primary:hover{
+  transform:translateY(-4px) scale(1.05) !important;
+  box-shadow:0 10px 40px rgba(200,207,232,0.6),0 0 80px rgba(91,138,255,0.3),0 20px 60px rgba(0,0,0,0.3) !important;
+  background-position:right center;
+  animation:glowPulse 2s ease-in-out infinite;
+}
+.btn-primary:active{transform:translateY(-1px) scale(0.98) !important}
+
+/* Enhanced btn-ghost */
+.btn-ghost{
+  position:relative;overflow:hidden;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s,color 0.3s,border-color 0.3s;
+}
+.btn-ghost::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 30%,rgba(200,207,232,0.12) 50%,transparent 70%);
+  transform:translateX(-100%);transition:transform 0.5s ease;
+}
+.btn-ghost:hover::before{transform:translateX(100%)}
+.btn-ghost:hover{
+  transform:translateY(-4px) scale(1.04) !important;
+  box-shadow:0 8px 30px rgba(200,207,232,0.25),inset 0 0 20px rgba(200,207,232,0.06) !important;
+  border-color:rgba(200,207,232,0.9) !important;
+}
+
+/* form-submit hover */
+.form-submit{
+  position:relative;overflow:hidden;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s,background 0.3s;
+}
+.form-submit::after{
+  content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;
+  background:rgba(255,255,255,0.3);transform:skewX(-20deg);
+  transition:left 0.5s ease;
+}
+.form-submit:hover::after{left:120%}
+.form-submit:hover{
+  transform:translateY(-3px) scale(1.03) !important;
+  box-shadow:0 12px 40px rgba(200,207,232,0.5) !important;
+}
+
+/* Nav link rotate-underline */
+.nav-links a{
+  transition:color 0.25s,transform 0.2s;display:inline-block;
+}
+.nav-links a:hover{transform:translateY(-1px)}
+
+/* Tool badge hover */
+.tool-badge{
+  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  cursor:default;
+}
+.tool-badge:hover{
+  transform:translateY(-3px) scale(1.06) !important;
+  border-color:rgba(200,207,232,0.8) !important;
+  color:#ffffff !important;
+  box-shadow:0 6px 20px rgba(200,207,232,0.2),0 0 12px rgba(91,138,255,0.15) !important;
+}
+
+/* svc-card enhanced hover */
+.svc-card{
+  transition:background 0.3s,transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
+}
+.svc-card:hover{
+  transform:translateY(-6px) !important;
+  box-shadow:0 20px 50px rgba(0,0,0,0.4),0 0 30px rgba(200,207,232,0.06) !important;
+}
+
+/* about-num hover */
+.about-num{
+  transition:background 0.3s,transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.about-num:hover{transform:scale(1.04)}
+
+/* svc-icon float on hover */
+.svc-card:hover .svc-icon{animation:floatY-slow 1.5s ease-in-out infinite}
+
+/* contact-link hover */
+.contact-link{transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.contact-link:hover{transform:translateX(6px) !important}
+
+/* 5. WORD-BY-WORD TEXT ANIMATION */
+.word-anim-wrap{display:inline}
+.word-anim-wrap .word{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.4s ease, transform 0.4s ease;
+}
+.word-anim-wrap.visible .word{opacity:1;transform:translateY(0)}
+
+/* Hero title chars float entrance */
+.hero-title .name-het,
+.hero-title .name-son,
+.hero-title .name-kusare{
+  display:inline-block;
+  transition:text-shadow 0.3s;
+}
+.hero-title .name-het:hover{text-shadow:0 0 40px rgba(255,255,255,0.6),0 0 80px rgba(200,207,232,0.4)}
+.hero-title .name-son:hover{text-shadow:0 0 50px rgba(200,207,232,0.8),0 0 100px rgba(91,138,255,0.5)}
+.hero-title .name-kusare:hover{text-shadow:0 0 50px rgba(91,138,255,0.9),0 0 100px rgba(91,138,255,0.4)}
+
+/* Section title word reveal */
+.section-title{perspective:600px}
+
+/* Float orbs enhanced */
+.orb-1{animation:orbFloat 20s ease-in-out infinite alternate, floatY-slow 8s ease-in-out infinite !important}
+.orb-2{animation:orbFloat 26s ease-in-out infinite alternate-reverse, floatY 12s ease-in-out infinite !important}
+
+/* Scroll indicator bounce */
+.scroll-line{animation:scrollPulse 2s infinite, floatY-slow 2s ease-in-out infinite !important}
+
+/* Available badge levitate */
+.about-avail-badge{
+  animation:levitate 3s ease-in-out infinite;
+  cursor:default;
+}
+
+/* Nav logo float */
+.nav-logo{
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),text-shadow 0.3s;display:inline-flex!important;
+}
+.nav-logo:hover{
+  transform:scale(1.06) translateY(-1px);
+  text-shadow:0 0 20px rgba(200,207,232,0.5);
+}
+
+/* Gallery item enhanced glow hover */
+.gallery-item{
+  transition:border-color 0.3s,transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s !important;
+}
+.gallery-item:hover{
+  transform:scale(1.02) !important;
+  box-shadow:0 12px 40px rgba(200,207,232,0.15),0 0 20px rgba(91,138,255,0.1) !important;
+  border-color:var(--luffy) !important;
+}
+
+/* Filter button enhanced */
+.filter-btn{
+  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.filter-btn:hover{
+  transform:translateY(-2px) scale(1.04) !important;
+}
+.filter-btn.active{
+  animation:glowPulse 2s ease-in-out infinite;
+}
+
+/* contact-link icon spin on hover */
+.contact-link:hover .contact-link-icon{
+  animation:floatRotate 0.6s ease-in-out;
+}
+
 </style>
 </head>
 <body>
@@ -797,10 +985,265 @@ const ham=document.getElementById('hamburger'),mob=document.getElementById('mobi
 ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open')});
 mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open')}));
 
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');e.target.querySelectorAll('.skill-fill').forEach(b=>{b.style.transform=`scaleX(${b.getAttribute('data-width')||1})`})}})},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+/* reveal handled by animation script */
 
 function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.form-submit');btn.textContent='Ki Blast Sent! 🔥';btn.style.background='#7c3aed';setTimeout(()=>{btn.textContent='Send Message';btn.style.background='';e.target.reset()},3000)}
+</script>
+
+<script>
+/* ─── INJECTED ANIMATION SCRIPT ─── */
+/* ============================================================
+   ANIMATION SCRIPT — All 5 features
+   ============================================================ */
+
+(function(){
+  'use strict';
+
+  /* ── 1 & 2: ENHANCED REVEAL with stagger & direction ── */
+  function initReveal(){
+    const els=document.querySelectorAll('.reveal');
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach((e,i)=>{
+        if(e.isIntersecting){
+          const delay=parseFloat(e.target.style.transitionDelay||0)*1000;
+          setTimeout(()=>{
+            e.target.classList.add('visible');
+            // Animate skill bars
+            e.target.querySelectorAll('.skill-fill').forEach(b=>{
+              b.style.transform=`scaleX(${b.getAttribute('data-width')||1})`;
+            });
+            // Trigger word animations inside
+            e.target.querySelectorAll('.word-anim-wrap').forEach(w=>w.classList.add('visible'));
+          },delay);
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(el=>obs.observe(el));
+  }
+
+  /* ── 5: WORD-BY-WORD TEXT ANIMATION ── */
+  function initWordAnim(){
+    // Targets: section subtitles, about-text paragraphs, hero sub
+    const textTargets=document.querySelectorAll('.hero-sub, .about-text p, .svc-desc, .contact-sub');
+    textTargets.forEach(el=>{
+      if(el.dataset.wordAnimDone) return;
+      el.dataset.wordAnimDone='1';
+      const words=el.textContent.trim().split(/\s+/);
+      const wrap=document.createElement('span');
+      wrap.className='word-anim-wrap';
+      words.forEach((w,i)=>{
+        const span=document.createElement('span');
+        span.className='word';
+        span.textContent=w+' ';
+        span.style.transitionDelay=(i*0.04)+'s';
+        wrap.appendChild(span);
+      });
+      el.textContent='';
+      el.appendChild(wrap);
+
+      // Trigger via IntersectionObserver
+      const obs=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      },{threshold:0.2});
+      obs.observe(wrap);
+    });
+
+    // Hero title: letter float entrance stagger
+    const heroTitle=document.querySelector('.hero-title');
+    if(heroTitle){
+      const spans=heroTitle.querySelectorAll('.name-het,.name-son,.name-kusare,.name-edits');
+      spans.forEach((s,i)=>{
+        s.style.opacity='0';
+        s.style.transform='translateY(30px)';
+        s.style.transition=`opacity 0.7s ${0.4+i*0.12}s ease, transform 0.7s ${0.4+i*0.12}s cubic-bezier(0.34,1.56,0.64,1)`;
+        setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)'},50);
+      });
+    }
+
+    // Section titles: word split
+    document.querySelectorAll('.section-title').forEach(el=>{
+      if(el.dataset.wordSplit) return;
+      el.dataset.wordSplit='1';
+      // Split by <br> preserving line breaks
+      const html=el.innerHTML;
+      const parts=html.split(/<br\s*\/?>/i);
+      el.innerHTML=parts.map(part=>{
+        const tmp=document.createElement('div');
+        tmp.innerHTML=part;
+        const text=tmp.innerHTML;
+        // wrap each word
+        return text.split(/(\s+)/).map((t,i)=>{
+          if(/^\s+$/.test(t)||t==='') return t;
+          return `<span class="title-word" style="display:inline-block;opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.34,1.56,0.64,1)">${t}</span>`;
+        }).join('');
+      }).join('<br>');
+
+      const obs=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.querySelectorAll('.title-word').forEach((w,i)=>{
+              setTimeout(()=>{w.style.opacity='1';w.style.transform='translateY(0)'},i*60);
+            });
+            obs.unobserve(e.target);
+          }
+        });
+      },{threshold:0.2});
+      obs.observe(el);
+    });
+  }
+
+  /* ── 3: PARALLAX BACKGROUNDS ── */
+  function initParallax(){
+    const heroSection=document.getElementById('hero');
+    const heroHorizon=document.querySelector('.hero-horizon');
+    const heroWaves=document.querySelector('.hero-waves');
+    const orbs=document.querySelectorAll('.orb');
+    const pageHeader=document.querySelector('.page-header');
+
+    let ticking=false;
+    window.addEventListener('scroll',()=>{
+      if(!ticking){requestAnimationFrame(()=>{
+        const sy=window.scrollY;
+        // Hero parallax
+        if(heroSection){
+          const heroContent=heroSection.querySelector('.hero-content');
+          if(heroContent) heroContent.style.transform=`translateY(${sy*0.18}px)`;
+          const heroPhoto=heroSection.querySelector('.hero-photo-col');
+          if(heroPhoto) heroPhoto.style.transform=`translateY(${sy*0.08}px)`;
+        }
+        if(heroHorizon) heroHorizon.style.transform=`translateY(${sy*0.25}px)`;
+        if(heroWaves) heroWaves.style.transform=`translateY(${sy*0.35}px)`;
+        // Orb parallax — each at different speed
+        orbs.forEach((o,i)=>{
+          const speed=[0.06,0.1,0.04][i]||0.06;
+          o.style.transform=`translate(0, ${sy*speed}px)`;
+        });
+        // Gallery page header parallax
+        if(pageHeader){
+          pageHeader.style.backgroundPositionY=`${sy*0.4}px`;
+          const pageTag=pageHeader.querySelector('.page-title');
+          if(pageTag) pageTag.style.transform=`translateY(${sy*0.12}px)`;
+        }
+        ticking=false;
+      });ticking=true;}
+    },{passive:true});
+  }
+
+  /* ── 4: ENHANCED HOVER EFFECTS (extra JS layer) ── */
+  function initHoverFx(){
+    // Magnetic button effect
+    document.querySelectorAll('.btn-primary,.btn-ghost,.form-submit').forEach(btn=>{
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        const cx=r.left+r.width/2, cy=r.top+r.height/2;
+        const dx=(e.clientX-cx)*0.2, dy=(e.clientY-cy)*0.2;
+        btn.style.transform=`translateY(-4px) scale(1.05) translate(${dx}px,${dy}px)`;
+      });
+      btn.addEventListener('mouseleave',()=>{
+        btn.style.transform='';
+      });
+    });
+
+    // Glow cursor trail on service cards
+    document.querySelectorAll('.svc-card').forEach(card=>{
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect();
+        const x=e.clientX-r.left, y=e.clientY-r.top;
+        card.style.background=`radial-gradient(300px circle at ${x}px ${y}px, rgba(200,207,232,0.07), var(--panel-s) 60%)`;
+      });
+      card.addEventListener('mouseleave',()=>{card.style.background='';});
+    });
+
+    // Gallery item tilt effect
+    document.querySelectorAll('.gallery-item').forEach(item=>{
+      item.addEventListener('mousemove',e=>{
+        const r=item.getBoundingClientRect();
+        const cx=r.width/2, cy=r.height/2;
+        const rx=(e.clientY-r.top-cy)/cy*4;
+        const ry=-(e.clientX-r.left-cx)/cx*4;
+        item.style.transform=`perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+      });
+      item.addEventListener('mouseleave',()=>{item.style.transform='';});
+    });
+
+    // Nav bounty tag rotate wiggle
+    const bounty=document.querySelector('.nav-bounty');
+    if(bounty){
+      setInterval(()=>{
+        bounty.style.transform='rotate(-2deg) scale(1.04)';
+        setTimeout(()=>{bounty.style.transform='rotate(2deg) scale(1.04)'},100);
+        setTimeout(()=>{bounty.style.transform=''},200);
+      },4000);
+    }
+
+    // About numbers count-up
+    document.querySelectorAll('.num-val').forEach(el=>{
+      const obs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const target=el.textContent.trim();
+            const num=parseFloat(target);
+            if(isNaN(num)){obs.unobserve(el);return;}
+            const suffix=target.replace(/[\d.]/g,'');
+            let start=0, duration=1400, startTime=null;
+            function step(ts){
+              if(!startTime)startTime=ts;
+              const p=Math.min((ts-startTime)/duration,1);
+              const ease=1-Math.pow(1-p,3);
+              el.textContent=Math.round(num*ease)+suffix;
+              if(p<1)requestAnimationFrame(step);
+              else el.textContent=target;
+            }
+            requestAnimationFrame(step);
+            obs.unobserve(el);
+          }
+        });
+      },{threshold:0.5});
+      obs.observe(el);
+    });
+  }
+
+  /* ── FLOATING ELEMENTS ── */
+  function initFloating(){
+    // Apply float to hero photo frame
+    const photoFrame=document.querySelector('.hero-photo-frame');
+    if(photoFrame){
+      photoFrame.style.animation='levitate 4s ease-in-out infinite';
+    }
+    // Float nav logo icon
+    const navLogoImg=document.querySelector('nav img');
+    if(navLogoImg){
+      navLogoImg.style.animation='floatY-slow 3s ease-in-out infinite';
+    }
+    // Ticker dots bounce
+    document.querySelectorAll('.ticker-dot').forEach((dot,i)=>{
+      dot.style.animation=`bouncePop 1.2s ${i*0.15}s ease-in-out infinite`;
+    });
+    // Section label lines pulse
+    document.querySelectorAll('.section-label-line,.eyebrow-line').forEach((line,i)=>{
+      line.style.animation=`floatY-slow ${2+i*0.3}s ease-in-out infinite`;
+    });
+    // Scroll indicator
+    const scrollLine=document.querySelector('.scroll-line');
+    if(scrollLine) scrollLine.style.animation='scrollPulse 2s infinite';
+  }
+
+  /* ── INIT ── */
+  document.addEventListener('DOMContentLoaded',()=>{
+    initWordAnim();
+    initParallax();
+    initHoverFx();
+    initFloating();
+    initReveal();
+  });
+})();
+
 </script>
 </body>
 </html>
