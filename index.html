@@ -738,10 +738,9 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
 .vidslider-title{font-family:var(--display);font-size:clamp(28px,4vw,44px);color:var(--white);letter-spacing:0.03em;font-weight:800}
 .vidslider-title em{font-style:normal;color:var(--luffy)}
 
-.vidslider-viewport{overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent 0,#000 44px,#000 calc(100% - 44px),transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 44px,#000 calc(100% - 44px),transparent 100%)}
-.vidslider-track{display:flex;gap:18px;width:max-content;animation:vidSliderScroll 38s linear infinite}
-.vidslider-section:hover .vidslider-track{animation-play-state:paused}
-@keyframes vidSliderScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.vidslider-viewport{overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent 0,#000 44px,#000 calc(100% - 44px),transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 44px,#000 calc(100% - 44px),transparent 100%);cursor:grab;touch-action:pan-y}
+.vidslider-viewport.is-dragging{cursor:grabbing}
+.vidslider-track{display:flex;gap:18px;width:max-content;will-change:transform;user-select:none}
 
 .vidslide{position:relative;flex-shrink:0;width:220px;aspect-ratio:9/16;border-radius:10px;overflow:hidden;background:var(--panel);border:1px solid var(--border);transition:border-color 0.35s,transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.35s}
 .vidslide:hover{border-color:var(--luffy);transform:translateY(-6px) scale(1.03);box-shadow:0 16px 40px rgba(0,0,0,0.5),0 0 24px rgba(91,138,255,0.18)}
@@ -1512,6 +1511,102 @@ function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.f
 
 </script>
 <script>
+/* ── VIDEO SLIDER: auto-scroll + drag with mouse/touch ── */
+(function(){
+  const viewport=document.querySelector('.vidslider-viewport');
+  const track=document.getElementById('vidSliderTrack');
+  if(!viewport||!track) return;
+
+  let pos=0;          // current translateX value (negative = moved left)
+  let halfWidth=0;    // width of one full set (track has 2 duplicate sets)
+  let dragging=false;
+  let startX=0, startPos=0, lastX=0, lastT=0, velocity=0;
+  let dragMoved=0;
+  const SPEED=34; // px per second auto-scroll
+
+  function measure(){
+    halfWidth=track.scrollWidth/2;
+  }
+  window.addEventListener('resize',measure);
+  measure();
+  // Re-measure after videos/layout settle
+  setTimeout(measure,300);
+  window.addEventListener('load',measure);
+
+  function wrap(){
+    if(halfWidth<=0) return;
+    if(pos<=-halfWidth) pos+=halfWidth;
+    if(pos>0) pos-=halfWidth;
+  }
+
+  let lastFrame=performance.now();
+  function tick(now){
+    const dt=(now-lastFrame)/1000;
+    lastFrame=now;
+    if(!dragging){
+      // inertia decay after a drag, then settle into steady auto-scroll
+      if(Math.abs(velocity)>2){
+        pos+=velocity*dt;
+        velocity*=0.94;
+      } else {
+        velocity=0;
+        pos-=SPEED*dt;
+      }
+      wrap();
+      track.style.transform=`translateX(${pos}px)`;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  function getX(e){
+    return e.touches&&e.touches.length ? e.touches[0].clientX : e.clientX;
+  }
+
+  function onDown(e){
+    dragging=true;
+    dragMoved=0;
+    velocity=0;
+    startX=getX(e);
+    lastX=startX;
+    lastT=performance.now();
+    startPos=pos;
+    viewport.classList.add('is-dragging');
+  }
+  function onMove(e){
+    if(!dragging) return;
+    const x=getX(e);
+    const dx=x-startX;
+    dragMoved=Math.max(dragMoved,Math.abs(dx));
+    pos=startPos+dx;
+    wrap();
+    track.style.transform=`translateX(${pos}px)`;
+    const now=performance.now();
+    const dt=now-lastT;
+    if(dt>0){ velocity=(x-lastX)/dt*1000; }
+    lastX=x; lastT=now;
+    if(Math.abs(dx)>6 && e.cancelable) e.preventDefault();
+  }
+  function onUp(){
+    if(!dragging) return;
+    dragging=false;
+    viewport.classList.remove('is-dragging');
+  }
+
+  // Mouse
+  viewport.addEventListener('mousedown',onDown);
+  window.addEventListener('mousemove',onMove);
+  window.addEventListener('mouseup',onUp);
+  // Touch
+  viewport.addEventListener('touchstart',onDown,{passive:true});
+  viewport.addEventListener('touchmove',onMove,{passive:false});
+  viewport.addEventListener('touchend',onUp);
+  viewport.addEventListener('touchcancel',onUp);
+
+  // Expose drag distance so the click-to-lightbox handler can ignore drags
+  window.__vidSliderDragMoved=()=>dragMoved;
+})();
+
 /* ── VIDEO SLIDER: hover/hold = sound on, click = fullscreen ── */
 (function(){
   const slides=document.querySelectorAll('.vidslide');
@@ -1568,8 +1663,9 @@ function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.f
     slide.addEventListener('touchend',endHold);
     slide.addEventListener('touchcancel',endHold);
 
-    /* Click / tap = open fullscreen lightbox with sound */
+    /* Click / tap = open fullscreen lightbox with sound (ignore if user was dragging) */
     slide.addEventListener('click',(e)=>{
+      if(window.__vidSliderDragMoved && window.__vidSliderDragMoved()>8) return;
       e.preventDefault();
       openLightbox(video.getAttribute('src'));
     });
