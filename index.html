@@ -206,8 +206,8 @@ section{position:relative;z-index:1}
 .about-num:hover::after{transform:scaleX(1)}
 .num-val{font-family:var(--display);font-size:2.8rem;color:#e8ecff;line-height:1}
 .num-label{font-family:var(--mono);font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:#8890aa;margin-top:4px}
-.about-text{font-size:0.9rem;line-height:1.95;color:#b8bccc;margin-top:22px;font-weight:400}
-.about-text p+p{margin-top:12px}
+.about-text{font-size:0.9rem;line-height:1.95;color:#b8bccc;margin-top:22px;font-weight:400;max-width:640px}
+.about-text p+p{margin-top:20px}
 .about-hire{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:transparent;border:2px solid rgba(200,207,232,0.6);color:#f0f2ff;font-family:var(--display);font-size:1rem;letter-spacing:0.08em;text-decoration:none;padding:11px 26px;border-radius:3px;transition:all 0.3s;cursor:none}
 .about-hire:hover{background:rgba(200,207,232,0.12);color:#ffffff;border-color:#ffffff}
 .about-hire .btn-icon{width:14px;height:14px}
@@ -340,6 +340,7 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
   .num-val{font-size:2.4rem;font-weight:800}
   .num-label{font-size:0.62rem;font-weight:600;color:#b8bccc}
   .about-text{font-size:1rem;font-weight:400;line-height:1.9;color:#c8cfe8}
+  .about-text p+p{margin-top:16px}
   .tool-badge{font-size:0.65rem;font-weight:600;padding:6px 13px}
   .about-hire{font-size:1rem;font-weight:700;padding:12px 24px}
 
@@ -728,6 +729,45 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
 }
 
 /* Footer update for PM */
+
+/* VIDEO SLIDER */
+.vidslider-section{padding:60px 0 70px;position:relative;z-index:1;background:var(--bg);border-bottom:1px solid var(--border);overflow:hidden}
+.vidslider-head{padding:0 44px;margin-bottom:28px}
+.vidslider-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--straw);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.vidslider-tag-line{width:28px;height:2px;background:var(--straw);border-radius:1px;flex-shrink:0}
+.vidslider-title{font-family:var(--display);font-size:clamp(28px,4vw,44px);color:var(--white);letter-spacing:0.03em;font-weight:800}
+.vidslider-title em{font-style:normal;color:var(--luffy)}
+
+.vidslider-viewport{overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent 0,#000 44px,#000 calc(100% - 44px),transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 44px,#000 calc(100% - 44px),transparent 100%)}
+.vidslider-track{display:flex;gap:18px;width:max-content;animation:vidSliderScroll 38s linear infinite}
+.vidslider-section:hover .vidslider-track{animation-play-state:paused}
+@keyframes vidSliderScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.vidslide{position:relative;flex-shrink:0;width:220px;aspect-ratio:9/16;border-radius:10px;overflow:hidden;background:var(--panel);border:1px solid var(--border);transition:border-color 0.35s,transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.35s}
+.vidslide:hover{border-color:var(--luffy);transform:translateY(-6px) scale(1.03);box-shadow:0 16px 40px rgba(0,0,0,0.5),0 0 24px rgba(91,138,255,0.18)}
+.vidslide video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
+.vidslide-badge{position:absolute;top:8px;left:8px;background:rgba(91,138,255,0.16);border:1px solid rgba(91,138,255,0.4);color:var(--straw);font-family:var(--mono);font-size:0.5rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 9px;border-radius:3px;backdrop-filter:blur(4px);z-index:2}
+.vidslide-num{position:absolute;bottom:8px;right:10px;font-family:var(--mono);font-size:0.62rem;color:var(--white);opacity:0.7;z-index:2}
+.vidslide-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.7);width:42px;height:42px;background:rgba(240,242,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.3s;color:#0a0a0c;z-index:2;pointer-events:none}
+.vidslide:hover .vidslide-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.vidslide-play svg{width:16px;height:16px;margin-left:2px}
+.vidslide{cursor:pointer}
+.vidslide.is-active{border-color:var(--luffy);box-shadow:0 0 0 2px rgba(91,138,255,0.3)}
+.vidslide-sound{position:absolute;bottom:8px;left:10px;width:20px;height:20px;z-index:2;opacity:0;transition:opacity 0.25s;color:var(--white)}
+.vidslide.is-soundon .vidslide-sound{opacity:0.85}
+
+/* VIDEO LIGHTBOX */
+.vidlightbox{position:fixed;inset:0;background:rgba(6,6,8,0.94);backdrop-filter:blur(8px);z-index:5000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.3s ease;padding:40px}
+.vidlightbox.open{opacity:1;visibility:visible}
+.vidlightbox video{max-width:min(92vw,520px);max-height:88vh;width:auto;height:auto;border-radius:12px;background:#000;box-shadow:0 30px 90px rgba(0,0,0,0.7)}
+.vidlightbox-close{position:absolute;top:24px;right:28px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.25s,border-color 0.25s;z-index:1}
+.vidlightbox-close:hover{background:rgba(255,255,255,0.16);border-color:var(--luffy)}
+
+
+@media(max-width:768px){
+  .vidslide{width:150px}
+  .vidslider-head{padding:0 20px}
+}
 </style>
 </head>
 <body>
@@ -843,8 +883,7 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
       <span class="name-edits">// Performace Marketer , Editor & Motion Graphics</span>
     </h1>
 
-    <p class="hero-sub">Transforming---raw-footage-into-captivating-stories---and-driving-real-results.-With-a-sharp-eye-for-motion-and-a-data-driven-mindset-for-performance-marketing,-I-craft-content-that-moves-audiences
- <em>and</em> metrics.</p>
+    <p class="hero-sub">Transforming raw footage into captivating stories and driving real results. With a sharp eye for motion and a data-driven mindset for performance marketing, I craft content that moves audiences <em>and</em> metrics.</p>
 
     <div class="hero-actions">
       <a href="gallery.html" class="btn-primary">
@@ -929,6 +968,42 @@ footer{padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy)
   <div class="ticker-item">Motion Graphics<div class="ticker-dot"></div></div>
   <div class="ticker-item">ROI Optimizer<div class="ticker-dot"></div></div>
 </div></div>
+
+<!-- VIDEO SLIDER -->
+<section class="vidslider-section">
+  <div class="vidslider-head">
+    <div class="vidslider-tag"><div class="vidslider-tag-line"></div>Recent Cuts</div>
+    <h2 class="vidslider-title">Selected <em>Video Work</em></h2>
+  </div>
+  <div class="vidslider-viewport">
+    <div class="vidslider-track" id="vidSliderTrack">
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">01</span><video src="media/video80.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">02</span><video src="media/video81.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">03</span><video src="media/video82.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">04</span><video src="media/video90.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">05</span><video src="media/video91.mov" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">06</span><video src="media/video92.mov" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">07</span><video src="media/video102.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">08</span><video src="media/video87.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">01</span><video src="media/video80.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">02</span><video src="media/video81.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">03</span><video src="media/video82.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">04</span><video src="media/video90.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">05</span><video src="media/video91.mov" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">06</span><video src="media/video92.mov" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">07</span><video src="media/video102.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+      <div class="vidslide" tabindex="0"><span class="vidslide-badge">VIDEO</span><span class="vidslide-num">08</span><video src="media/video87.mp4" muted loop playsinline preload="metadata"></video><span class="vidslide-play"><svg viewBox="0 0 24 24"><polygon points="5,3 21,12 5,21" fill="currentColor"/></svg></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO LIGHTBOX -->
+<div class="vidlightbox" id="vidLightbox">
+  <div class="vidlightbox-close" id="vidLightboxClose">
+    <svg viewBox="0 0 24 24" width="22" height="22"><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2"/><line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+  </div>
+  <video id="vidLightboxVideo" playsinline controls></video>
+</div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -1225,9 +1300,10 @@ function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.f
       words.forEach((w,i)=>{
         const span=document.createElement('span');
         span.className='word';
-        span.textContent=w+' ';
+        span.textContent=w;
         span.style.transitionDelay=(i*0.04)+'s';
         wrap.appendChild(span);
+        if(i<words.length-1) wrap.appendChild(document.createTextNode(' '));
       });
       el.textContent='';
       el.appendChild(wrap);
@@ -1434,6 +1510,97 @@ function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.f
   });
 })();
 
+</script>
+<script>
+/* ── VIDEO SLIDER: hover/hold = sound on, click = fullscreen ── */
+(function(){
+  const slides=document.querySelectorAll('.vidslide');
+  const lightbox=document.getElementById('vidLightbox');
+  const lbVideo=document.getElementById('vidLightboxVideo');
+  const lbClose=document.getElementById('vidLightboxClose');
+  let holdTimer=null;
+
+  function addSoundIcon(slide){
+    if(slide.querySelector('.vidslide-sound'))return;
+    const s=document.createElement('span');
+    s.className='vidslide-sound';
+    s.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+    slide.appendChild(s);
+  }
+
+  function unmuteAndPlay(slide){
+    const v=slide.querySelector('video');
+    if(!v) return;
+    v.muted=false;
+    v.volume=1;
+    slide.classList.add('is-soundon','is-active');
+    v.play().catch(()=>{ v.muted=true; });
+  }
+  function muteAndReset(slide){
+    const v=slide.querySelector('video');
+    if(!v) return;
+    v.pause();
+    v.currentTime=0;
+    v.muted=true;
+    slide.classList.remove('is-soundon','is-active');
+  }
+
+  slides.forEach(slide=>{
+    addSoundIcon(slide);
+    const video=slide.querySelector('video');
+
+    /* Desktop: hover = play with sound */
+    slide.addEventListener('mouseenter',()=>{
+      if(window.matchMedia('(hover: hover)').matches) unmuteAndPlay(slide);
+    });
+    slide.addEventListener('mouseleave',()=>{
+      if(window.matchMedia('(hover: hover)').matches) muteAndReset(slide);
+    });
+
+    /* Mobile: press & hold = play with sound, release = mute/stop */
+    slide.addEventListener('touchstart',(e)=>{
+      holdTimer=setTimeout(()=>unmuteAndPlay(slide),120);
+    },{passive:true});
+    const endHold=()=>{
+      clearTimeout(holdTimer);
+      muteAndReset(slide);
+    };
+    slide.addEventListener('touchend',endHold);
+    slide.addEventListener('touchcancel',endHold);
+
+    /* Click / tap = open fullscreen lightbox with sound */
+    slide.addEventListener('click',(e)=>{
+      e.preventDefault();
+      openLightbox(video.getAttribute('src'));
+    });
+    slide.addEventListener('keydown',(e)=>{
+      if(e.key==='Enter'||e.key===' '){
+        e.preventDefault();
+        openLightbox(video.getAttribute('src'));
+      }
+    });
+  });
+
+  function openLightbox(src){
+    slides.forEach(muteAndReset);
+    lbVideo.src=src;
+    lbVideo.muted=false;
+    lbVideo.volume=1;
+    lightbox.classList.add('open');
+    document.body.style.overflow='hidden';
+    lbVideo.play().catch(()=>{});
+  }
+  function closeLightbox(){
+    lbVideo.pause();
+    lbVideo.removeAttribute('src');
+    lbVideo.load();
+    lightbox.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  lbClose.addEventListener('click',closeLightbox);
+  lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
+})();
 </script>
 </body>
 </html>
