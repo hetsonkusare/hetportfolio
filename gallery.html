@@ -728,7 +728,7 @@ footer{padding:20px 44px;background:#0a0703;border-top:2px solid var(--luffy);di
 </div>
 
 <footer style="padding:22px 52px;background:var(--bg2);border-top:2px solid var(--luffy);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;gap:16px;flex-wrap:wrap">
-  <span class="footer-copy" style="font-family:var(--mono);font-size:0.56rem;color:var(--dim2);letter-spacing:0.1em;">© 2024 Het Sonkusare — Video Editor · Motion Designer · Performance Marketer</span>
+  <span class="footer-copy" style="font-family:var(--mono);font-size:0.56rem;color:var(--dim2);letter-spacing:0.1em;">© <span id="footYear">2026</span> Het Sonkusare — Video Editor · Motion Designer · Performance Marketer</span>
   <a href="index.html" class="footer-back" style="color:var(--dim);">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"/>
@@ -1154,5 +1154,6 @@ buildGrid();
 })();
 
 </script>
+<script>const fy=document.getElementById('footYear');if(fy)fy.textContent=new Date().getFullYear();</script>
 </body>
 </html>
