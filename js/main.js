@@ -15,16 +15,257 @@ $(function () {
 
     /***************************
 
+    In-Page Media Capture Handler (Supports photos & videos, prevents external navigation)
+
+    ***************************/
+    window.openWebsiteMediaViewer = function(mediaSrc, isImage) {
+        var existingModal = document.getElementById('mil-custom-video-modal');
+        if (existingModal) existingModal.remove();
+
+        var contentHtml = '';
+        if (isImage || mediaSrc.match(/\.(jpeg|jpg|png|webp|gif)($|\?)/i)) {
+            contentHtml = `<img id="milModalImageViewer" src="${mediaSrc}" alt="Portfolio Media" style="max-width:100%; max-height:80vh; object-fit:contain; border-radius:10px; box-shadow:0 10px 40px rgba(0,0,0,0.8);">`;
+        } else {
+            var isMov = mediaSrc.toLowerCase().indexOf('.mov') !== -1;
+            var typeAttr = isMov ? 'video/quicktime' : 'video/mp4';
+            contentHtml = `
+                <video id="milModalVideoPlayer" controls autoplay playsinline controlsList="nodownload">
+                    <source src="${mediaSrc}" type="${typeAttr}">
+                    Your browser does not support HTML5 video playback.
+                </video>
+            `;
+        }
+
+        var modalHtml = `
+            <div id="mil-custom-video-modal" class="mil-video-modal-overlay">
+                <div class="mil-video-modal-container">
+                    <button type="button" class="mil-video-modal-close" id="milVideoModalClose" title="Close">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>CLOSE</span>
+                    </button>
+                    <div class="mil-video-modal-content">
+                        ${contentHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        document.body.classList.add('mil-video-modal-open');
+
+        var container = document.querySelector('.mil-video-modal-container');
+        var videoElem = document.getElementById('milModalVideoPlayer');
+        var imgElem = document.getElementById('milModalImageViewer');
+
+        function applyAspectClass(width, height) {
+            if (!container || !width || !height) return;
+            container.classList.remove('is-vertical', 'is-horizontal', 'is-square');
+            var ratio = width / height;
+            if (ratio < 0.88) {
+                container.classList.add('is-vertical');
+            } else if (ratio > 1.2) {
+                container.classList.add('is-horizontal');
+            } else {
+                container.classList.add('is-square');
+            }
+        }
+
+        if (videoElem) {
+            videoElem.onloadedmetadata = function() {
+                applyAspectClass(videoElem.videoWidth, videoElem.videoHeight);
+            };
+            if (videoElem.videoWidth) {
+                applyAspectClass(videoElem.videoWidth, videoElem.videoHeight);
+            }
+            videoElem.play().catch(function() {});
+        }
+
+        if (imgElem) {
+            imgElem.onload = function() {
+                applyAspectClass(imgElem.naturalWidth, imgElem.naturalHeight);
+            };
+            if (imgElem.naturalWidth) {
+                applyAspectClass(imgElem.naturalWidth, imgElem.naturalHeight);
+            }
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('mil-custom-video-modal');
+            if (videoElem) videoElem.pause();
+            if (modal) {
+                modal.style.opacity = '0';
+                setTimeout(function() {
+                    modal.remove();
+                    document.body.classList.remove('mil-video-modal-open');
+                }, 150);
+            }
+        }
+
+        var closeBtn = document.getElementById('milVideoModalClose');
+        if (closeBtn) {
+            closeBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeModal();
+            };
+        }
+
+        var overlay = document.getElementById('mil-custom-video-modal');
+        if (overlay) {
+            overlay.onclick = function(e) {
+                if (e.target.id === 'mil-custom-video-modal' || e.target.classList.contains('mil-video-modal-container')) {
+                    closeModal();
+                }
+            };
+        }
+
+        var escHandler = function(e) {
+            if (e.keyCode === 27) {
+                closeModal();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+    };
+
+    document.addEventListener('click', function (e) {
+        var target = e.target.closest('a[data-fancybox], a[href*=".mp4"], a[href*=".mov"], a[href*=".webm"], a[href*=".jpeg"], a[href*=".jpg"], a[href*=".png"], .mil-masonry-item, .mil-portfolio-item');
+        if (target) {
+            var mediaSrc = (target.querySelector('source') && target.querySelector('source').getAttribute('src')) || 
+                           (target.querySelector('video') && target.querySelector('video').getAttribute('src')) ||
+                           target.getAttribute('href') || 
+                           (target.querySelector('img') && target.querySelector('img').getAttribute('src'));
+            if (mediaSrc) {
+                var isImage = !!mediaSrc.match(/\.(jpeg|jpg|png|webp|gif)($|\?)/i);
+                var isVideo = !!mediaSrc.match(/\.(mp4|mov|webm|ogv)($|\?)/i);
+                if (isImage || isVideo) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    window.openWebsiteMediaViewer(mediaSrc, isImage);
+                    return false;
+                }
+            }
+        }
+    }, true);
+
+    /***************************
+
+    Force Autoplay for All Page Videos
+
+    ***************************/
+    window.playAllPageVideos = function() {
+        var videos = document.querySelectorAll('video');
+        videos.forEach(function(vid) {
+            if (vid.id === 'milModalVideoPlayer') return;
+            vid.muted = true;
+            vid.defaultMuted = true;
+            vid.setAttribute('muted', '');
+            vid.setAttribute('playsinline', '');
+            vid.playsInline = true;
+            vid.setAttribute('autoplay', '');
+            var p = vid.play();
+            if (p !== undefined) {
+                p.catch(function() {});
+            }
+        });
+    };
+
+    /***************************
+
+    Auto Aspect-Ratio Classifier for Masonry Video & Image Cards
+
+    ***************************/
+    window.classifyMasonryMedia = function() {
+        if (window.playAllPageVideos) window.playAllPageVideos();
+
+        var videoItems = document.querySelectorAll('.mil-masonry-item video');
+        videoItems.forEach(function(video) {
+            var item = video.closest('.mil-masonry-item');
+            if (!item) return;
+
+            function updateRatio() {
+                var w = video.videoWidth;
+                var h = video.videoHeight;
+                if (w && h) {
+                    item.classList.remove('mil-vert-video', 'mil-hori-video', 'mil-square-video');
+                    var ratio = w / h;
+                    if (ratio < 0.88) {
+                        item.classList.add('mil-vert-video');
+                    } else if (ratio > 1.2) {
+                        item.classList.add('mil-hori-video');
+                    } else {
+                        item.classList.add('mil-square-video');
+                    }
+                }
+            }
+
+            if (video.readyState >= 1) {
+                updateRatio();
+            } else {
+                video.onloadedmetadata = updateRatio;
+                video.addEventListener('loadedmetadata', updateRatio);
+            }
+        });
+
+        // Also classify featured portfolio section cover frames!
+        var coverVideos = document.querySelectorAll('.mil-cover-frame video');
+        coverVideos.forEach(function(video) {
+            var frame = video.closest('.mil-cover-frame');
+            if (!frame) return;
+
+            function updateFrame() {
+                var w = video.videoWidth;
+                var h = video.videoHeight;
+                if (w && h) {
+                    frame.classList.remove('mil-hori', 'mil-vert');
+                    if (w < h) {
+                        frame.classList.add('mil-vert');
+                    } else {
+                        frame.classList.add('mil-hori');
+                    }
+                }
+            }
+
+            if (video.readyState >= 1) {
+                updateFrame();
+            } else {
+                video.onloadedmetadata = updateFrame;
+                video.addEventListener('loadedmetadata', updateFrame);
+            }
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            window.classifyMasonryMedia();
+            window.playAllPageVideos();
+        });
+    } else {
+        window.classifyMasonryMedia();
+        window.playAllPageVideos();
+    }
+    window.addEventListener('load', window.playAllPageVideos);
+
+    /***************************
+
     swup
 
     ***************************/
     const options = {
         containers: ['#swupMain', '#swupMenu'],
         animateHistoryBrowsing: true,
-        linkSelector: 'a:not([data-no-swup])',
+        linkSelector: 'a:not([data-no-swup]):not([data-fancybox]):not([href*=".mp4"]):not([href*=".mov"]):not([href*=".webm"])',
         animationSelector: '[class="mil-main-transition"]'
     };
     const swup = new Swup(options);
+    swup.on('contentReplaced', function () {
+        if (window.classifyMasonryMedia) window.classifyMasonryMedia();
+        if (window.playAllPageVideos) window.playAllPageVideos();
+    });
 
     /***************************
 
@@ -482,15 +723,21 @@ $(function () {
     fancybox
 
     ***************************/
-    $('[data-fancybox="gallery"]').fancybox({
+    $('[data-fancybox]').fancybox({
         buttons: [
-            "slideShow",
             "zoom",
+            "slideShow",
             "fullScreen",
             "close"
-          ],
+        ],
         loop: false,
-        protect: true
+        protect: false,
+        toolbar: true,
+        smallBtn: true,
+        clickContent: false,
+        clickSlide: "close",
+        clickOutside: "close",
+        keyboard: true
     });
     $.fancybox.defaults.hash = false;
     /***************************
@@ -923,15 +1170,21 @@ $(function () {
         fancybox
 
         ***************************/
-        $('[data-fancybox="gallery"]').fancybox({
+        $('[data-fancybox]').fancybox({
             buttons: [
-            "slideShow",
-            "zoom",
-            "fullScreen",
-            "close"
-          ],
+                "zoom",
+                "slideShow",
+                "fullScreen",
+                "close"
+            ],
             loop: false,
-            protect: true
+            protect: false,
+            toolbar: true,
+            smallBtn: true,
+            clickContent: false,
+            clickSlide: "close",
+            clickOutside: "close",
+            keyboard: true
         });
         $.fancybox.defaults.hash = false;
         /***************************
@@ -1047,6 +1300,78 @@ $(function () {
             },
         });
 
+    });
+
+    /***************************
+
+    In-Page Custom Video Modal Handler
+
+    ***************************/
+    $(document).on('click', 'a[data-fancybox], a[href$=".mp4"], a[href$=".mov"], a[href$=".webm"], .mil-masonry-item', function (e) {
+        var videoSrc = $(this).attr('href') || $(this).find('source').attr('src') || $(this).find('video').attr('src');
+        if (!videoSrc) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        $('#mil-custom-video-modal').remove();
+
+        var modalHtml = `
+            <div id="mil-custom-video-modal" class="mil-video-modal-overlay">
+                <div class="mil-video-modal-container">
+                    <button type="button" class="mil-video-modal-close" id="milVideoModalClose" title="Close Video">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>CLOSE</span>
+                    </button>
+                    <div class="mil-video-modal-content">
+                        <video id="milModalVideoPlayer" controls autoplay playsinline controlsList="nodownload">
+                            <source src="${videoSrc}" type="${videoSrc.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'}">
+                            Your browser does not support HTML5 video playback.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        $('body').append(modalHtml);
+        $('body').addClass('mil-video-modal-open');
+
+        var videoElem = document.getElementById('milModalVideoPlayer');
+        if (videoElem) {
+            videoElem.play().catch(function() {});
+        }
+
+        function closeModal() {
+            if (videoElem) {
+                videoElem.pause();
+            }
+            $('#mil-custom-video-modal').fadeOut(150, function() {
+                $(this).remove();
+                $('body').removeClass('mil-video-modal-open');
+            });
+        }
+
+        $('#milVideoModalClose').off('click').on('click', function(evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            closeModal();
+        });
+
+        $('#mil-custom-video-modal').off('click').on('click', function(evt) {
+            if ($(evt.target).is('#mil-custom-video-modal') || $(evt.target).hasClass('mil-video-modal-container')) {
+                closeModal();
+            }
+        });
+
+        $(document).off('keydown.milVideoModal').on('keydown.milVideoModal', function(evt) {
+            if (evt.keyCode === 27) { // ESC key
+                closeModal();
+                $(document).off('keydown.milVideoModal');
+            }
+        });
     });
 
 });
